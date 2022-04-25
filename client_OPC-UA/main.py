@@ -2,44 +2,74 @@ import asyncio
 import sys
 # sys.path.insert(0, "..")
 import logging
+import threading 
 from asyncua import Client, Node, ua
 from time import sleep
 import keyboard
+import RPi.GPIO as GPIO
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(31, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger('asyncua')
 
+nb_patates = 0
+activable = 1
+on_off = 0
+
+global check_button
+check_button = False
+
+def make_potato():
+    global nb_patates
+    global activable
+    global on_off
+    while True:
+        print(activable)
+        sleep(0.2)
+        nb_patates += 1
+        print(f"J'ai fais {str(nb_patates)} patate(s).")
+        if GPIO.input(29) == GPIO.HIGH:
+            activable = 0
+            on_off = 0
+            print("Machine turned off.")
+            break
+        if GPIO.input(31) == GPIO.HIGH:
+            print("Machine allready running.")
+
+def check_button_pressed():
+    if GPIO.input(31) == GPIO.HIGH:
+        print("Please give a reason why the machine was turned off.")
+    elif GPIO.input(29) == GPIO.HIGH:
+        print("The machine is allready off.")
+    
+
 async def main():
-    uri = "my_uri"
     activable = 1
     on_off = False
     nb_patates = 0
+    uri = "my_uri"
     url = 'opc.tcp://localhost:4840/opcua'
-
+    
+    
     # Boucle "virtuelle pour simuler le focntionnement de PLC."
     while True:
-        if not on_off:
-            while True:
-                button_pressed = input("Mise en marche? (m): ")
-                print(str(activable))
-                if activable == 0 and button_pressed == "m":
-                    print("Veuillez fournir une raison expliquant l'arrêt de la machine.")
-                elif activable == 1 and button_pressed == "m":
-                    print("Mise en marche de la machine.")
-                    on_off = True
-                    break
-
-        while on_off:
-            sleep(1)
-            nb_patates += 1
-            print(f"J'ai fais {str(nb_patates)} patate(s).")
-            if keyboard.is_pressed("Alt"):
-                activable = 0
-                on_off = False
-
+        sleep(0.1)
+        if GPIO.input(31) == GPIO.HIGH and activable == 0:
+            print("Please give a reason why the machine was turned off.")
+            activale = 0
+        elif GPIO.input(31) == GPIO.HIGH and activable == 1:
+            print("The machine as been turned on.")
+            make_potato()
+            activable = 0
+            
         if activable == 0:
             try_connect_to_server = True
             while try_connect_to_server:
+                check_button_pressed()
                 try:
                     async with Client(url=url) as client:
                         while activable == 0:
@@ -49,15 +79,14 @@ async def main():
                             idx = await client.get_namespace_index(uri)
                             received_value = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Activable"])
                             activable = await received_value.read_value()
-                            print("Activable = " + str(activable))
+                            
                             if activable == 1:
                                 try_connect_to_server = False
+                                check_button = False
+                                thread.join()
                                 break
                 except asyncio.exceptions.TimeoutError or asyncio.exceptions.CancelledError:
                     print("Try connecting to server.")
-
-        if keyboard.is_pressed('q'):
-            exit()
 
 
 if __name__ == '__main__':

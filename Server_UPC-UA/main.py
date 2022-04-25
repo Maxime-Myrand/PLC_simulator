@@ -40,7 +40,8 @@ async def main():
         while True:
             await asyncio.sleep(1)
             await ativable.write_value(0)
-
+            
+            if keyboard.is_pressed("Ctrl"):
             reason = input("Donnez une raison expliquant l'arrêt de la machine: ")
             if len(reason) >= 5:
                 print("Enter a été pressé (une raison de l'arrêt a été donnée).")
