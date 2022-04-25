@@ -79,11 +79,15 @@ async def main():
                             idx = await client.get_namespace_index(uri)
                             received_value = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Activable"])
                             activable = await received_value.read_value()
+
+                            root = client.get_root_node()
+                            obj = root.get_child(["0:Objects", "{}:MyObject".format(idx)])
+
+                            res = obj.call_method("{}:multiply".format(idx), 3, "klk")
+                            print("method result is: ", res)
                             
                             if activable == 1:
                                 try_connect_to_server = False
-                                check_button = False
-                                thread.join()
                                 break
                 except asyncio.exceptions.TimeoutError or asyncio.exceptions.CancelledError:
                     print("Try connecting to server.")

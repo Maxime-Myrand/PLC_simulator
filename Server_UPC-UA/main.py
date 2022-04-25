@@ -8,12 +8,15 @@ sys.path.insert(0, "..")
 from asyncua import ua, Server
 from asyncua.common.methods import uamethod
 
-
+@uamethod
+def multiply(parent, x, y):
+    print("multiply method call with parameters: ", x, y)
+    return x * y
 
 @uamethod
 def func(parent, value):
+    print("Hello world")
     return value * 2
-
 
 async def main():
     _logger = logging.getLogger('asyncua')
@@ -42,7 +45,7 @@ async def main():
             await ativable.write_value(0)
             
             if keyboard.is_pressed("Ctrl"):
-            reason = input("Donnez une raison expliquant l'arrêt de la machine: ")
+                reason = input("Donnez une raison expliquant l'arrêt de la machine: ")
             if len(reason) >= 5:
                 print("Enter a été pressé (une raison de l'arrêt a été donnée).")
                 new_val = 1
