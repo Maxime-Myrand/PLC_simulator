@@ -33,13 +33,17 @@ async def main():
     # server.nodes, contains links to very common nodes like objects and root
     myobj = await server.nodes.objects.add_object(idx, 'PLC')
     ativable = await myobj.add_variable(idx, 'Activable', 1)
-
+    patates = await myobj.add_variable(idx, "Patates", 0)
+    print("=========================")
+    print(patates)
     # Set MyVariable to be writable by clients
     await ativable.set_writable()
+    await patates.set_writable()
     await server.nodes.objects.add_method(ua.NodeId('ServerMethod', 2), ua.QualifiedName('ServerMethod', 2), func, [ua.VariantType.Int64], [ua.VariantType.Int64])
     _logger.info('Starting server!')
     async with server:
         print("SERVER ON . . . ")
+        reason = ""
         while True:
             await asyncio.sleep(1)
             await ativable.write_value(0)
@@ -52,6 +56,9 @@ async def main():
 
                 _logger.info(f'Set value of "Activable" to {int(new_val)}')
                 await ativable.write_value(new_val)
+
+            nb_patate = await patates.get_value()
+            print(nb_patate)
 
             # value = await myvar.get_value()
             # if keyboard.is_pressed("Ctrl"):

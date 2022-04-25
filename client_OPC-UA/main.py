@@ -48,6 +48,7 @@ def check_button_pressed():
     
 
 async def main():
+    global nb_patates
     activable = 1
     on_off = False
     nb_patates = 0
@@ -78,7 +79,10 @@ async def main():
                             _logger.info('Children of root are: %r', await client.nodes.root.get_children())
                             idx = await client.get_namespace_index(uri)
                             received_value = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Activable"])
+                            patate = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Patates"])
+                            await patate.write_value(nb_patates)
                             activable = await received_value.read_value()
+
 
                             root = client.get_root_node()
                             obj = root.get_child(["0:Objects", "{}:MyObject".format(idx)])
