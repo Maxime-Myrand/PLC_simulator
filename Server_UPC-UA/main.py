@@ -60,14 +60,6 @@ async def main():
             nb_patate = await patates.get_value()
             print(nb_patate)
 
-            # value = await myvar.get_value()
-            # if keyboard.is_pressed("Ctrl"):
-            #     print("Enter a été pressé (une raison de l'arrêt a été donnée).")
-            #     new_val = 1
-            #
-            #     _logger.info(f'Set value of "Activable" to {int(new_val)}')
-            #     await ativable.write_value(new_val)
-
 
 async def change_activable(value):
     if value == 0:

@@ -74,21 +74,12 @@ async def main():
                 try:
                     async with Client(url=url) as client:
                         while activable == 0:
-                            # if response.status != 200:
-                            #     return {"error": f"server returned {response.status}"}
                             _logger.info('Children of root are: %r', await client.nodes.root.get_children())
                             idx = await client.get_namespace_index(uri)
                             received_value = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Activable"])
                             patate = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Patates"])
                             await patate.write_value(nb_patates)
                             activable = await received_value.read_value()
-
-
-                            root = client.get_root_node()
-                            obj = root.get_child(["0:Objects", "{}:MyObject".format(idx)])
-
-                            res = obj.call_method("{}:multiply".format(idx), 3, "klk")
-                            print("method result is: ", res)
                             
                             if activable == 1:
                                 try_connect_to_server = False
