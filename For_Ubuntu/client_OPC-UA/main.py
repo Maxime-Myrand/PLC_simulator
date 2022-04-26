@@ -1,0 +1,73 @@
+import asyncio
+import sys
+# sys.path.insert(0, "..")
+import logging
+import threading
+from asyncua import Client, Node, ua
+from time import sleep
+import keyboard
+
+logging.basicConfig(level=logging.INFO)
+_logger = logging.getLogger('asyncua')
+
+
+def make_potato():
+    nb_patates = 0
+    global activable
+    while True:
+        print(activable)
+        sleep(0.2)
+        nb_patates += 1
+        print(f"J'ai fais {str(nb_patates)} patate(s).")
+        if keyboard.is_pressed("Alt"):
+            print("Machine allready running.")
+        if keyboard.is_pressed("Ctrl"):
+            activable = 0
+            print("Machine turned off.")
+            break
+
+
+def check_button_pressed():
+    if keyboard.is_pressed("Alt"):
+        print("Please give a reason why the machine was turned off.")
+    elif keyboard.is_pressed("Ctrl"):
+        print("The machine is allready off.")
+    
+
+async def main():
+    global activable
+    activable = 1
+    uri = "my_uri"
+    url = 'opc.tcp://localhost:4840/opcua'
+
+    # Boucle virtuelle pour simuler le focntionnement de PLC.
+    while True:
+        sleep(0.1)
+        if keyboard.is_pressed("Alt") and activable == 0:
+            print("Please give a reason why the machine was turned off.")
+        elif keyboard.is_pressed("Alt") and activable == 1:
+            print("The machine as been turned on.")
+            make_potato()
+            activable = 0
+
+        if activable == 0:
+            try_connect_to_server = True
+            while try_connect_to_server:
+                check_button_pressed()
+                try:
+                    async with Client(url=url) as client:
+                        while activable == 0:
+                            _logger.info('Children of root are: %r', await client.nodes.root.get_children())
+                            idx = await client.get_namespace_index(uri)
+                            received_value = await client.nodes.root.get_child(["0:Objects", f"{idx}:PLC", f"{idx}:Activable"])
+                            activable = await received_value.read_value()
+                            
+                            if activable == 1:
+                                try_connect_to_server = False
+                                break
+                except asyncio.exceptions.TimeoutError or asyncio.exceptions.CancelledError:
+                    print("Try connecting to server.")
+
+
+if __name__ == '__main__':
+    asyncio.run(main())

@@ -89,6 +89,8 @@ Afin d'améliorer la simulation, il pourrait être intéressant d'ajouter un bou
 Désolé pour les coquilles, je corrige tout ça lundi. J'ai tout écris d'un seul jet et c'est la fin de semaine tsais!
 
 
-
+## Références
+https://python-opcua.readthedocs.io/en/latest/node.html
+https://opcfoundation.org/developer-tools/specifications-unified-architecture
 
 
