@@ -1,0 +1,457 @@
+{
+  "title": "PLC Dashboard",
+  "image": null,
+  "mobileHide": false,
+  "mobileOrder": null,
+  "configuration": {
+    "widgets": {
+      "f269b075-34f1-eb0a-3c29-823e826f7e30": {
+        "isSystemType": true,
+        "bundleAlias": "control_widgets",
+        "typeAlias": "led_indicator",
+        "type": "rpc",
+        "title": "New widget",
+        "image": null,
+        "description": null,
+        "sizeX": 2.5,
+        "sizeY": 2.5,
+        "config": {
+          "targetDeviceAliases": [],
+          "showTitle": false,
+          "backgroundColor": "#e6e7e8",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "0px",
+          "settings": {
+            "requestTimeout": 500,
+            "initialValue": true,
+            "ledColor": "#eac317",
+            "retrieveValueMethod": "timeseries",
+            "parseValueFunction": "return data == 1 ? true : false;",
+            "performCheckStatus": false,
+            "checkStatusMethod": "checkStatus",
+            "requestPersistent": false,
+            "valueAttribute": "Est activable",
+            "title": "Est activable"
+          },
+          "title": "New Led indicator",
+          "dropShadow": true,
+          "enableFullscreen": false,
+          "widgetStyle": {},
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "decimals": 2,
+          "datasources": [],
+          "targetDeviceAliasIds": [
+            "5c6ddcd5-23f8-99d1-27b8-df2f85193878"
+          ]
+        },
+        "row": 0,
+        "col": 0,
+        "id": "f269b075-34f1-eb0a-3c29-823e826f7e30"
+      },
+      "690bb23e-0938-b555-60ea-1453e0871926": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "timeseries_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "image": null,
+        "description": null,
+        "sizeX": 8,
+        "sizeY": 6.5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "name": null,
+              "entityAliasId": "5c6ddcd5-23f8-99d1-27b8-df2f85193878",
+              "filterId": null,
+              "dataKeys": [
+                {
+                  "name": "Dernière raison",
+                  "type": "timeseries",
+                  "label": "Dernière raison",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.8193357704165087
+                }
+              ]
+            }
+          ],
+          "timewindow": {
+            "hideInterval": false,
+            "hideAggregation": false,
+            "hideAggInterval": false,
+            "hideTimezone": false,
+            "selectedTab": 0,
+            "realtime": {
+              "realtimeType": 0,
+              "timewindowMs": 3600000,
+              "quickInterval": "CURRENT_DAY",
+              "interval": 1000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "showTimestamp": true,
+            "displayPagination": true,
+            "defaultPageSize": 10,
+            "enableSearch": true,
+            "enableStickyHeader": true,
+            "enableStickyAction": true,
+            "reserveSpaceForHiddenAction": "true",
+            "showMilliseconds": false,
+            "useEntityLabel": false,
+            "hideEmptyLines": false,
+            "useRowStyleFunction": false
+          },
+          "title": "Liste des raisons",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400,
+            "padding": "5px 10px 5px 10px"
+          },
+          "useDashboardTimewindow": false,
+          "showLegend": false,
+          "widgetStyle": {},
+          "actions": {},
+          "showTitleIcon": false,
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "displayTimewindow": true,
+          "titleTooltip": "",
+          "enableDataExport": true,
+          "widgetCss": "",
+          "noDataDisplayMessage": "Aucune données à afficher"
+        },
+        "row": 0,
+        "col": 0,
+        "id": "690bb23e-0938-b555-60ea-1453e0871926"
+      },
+      "3e707516-7d8e-46bb-c45a-863eda1625dd": {
+        "isSystemType": false,
+        "bundleAlias": "custom_widgets",
+        "typeAlias": "rpcbutton",
+        "type": "rpc",
+        "title": "New widget",
+        "image": null,
+        "description": null,
+        "sizeX": 4,
+        "sizeY": 2,
+        "config": {
+          "targetDeviceAliases": [],
+          "showTitle": false,
+          "backgroundColor": "#e6e7e8",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "0px",
+          "settings": {
+            "requestTimeout": 5000,
+            "oneWayElseTwoWay": false,
+            "buttonText": "Envoyer la raison",
+            "styleButton": {
+              "isRaised": true,
+              "isPrimary": false
+            },
+            "showError": false,
+            "requestPersistent": false,
+            "title": "Formulaire de la raison",
+            "methodName": "SendReason",
+            "inputText": "Raison"
+          },
+          "title": "Raison",
+          "dropShadow": true,
+          "enableFullscreen": false,
+          "widgetStyle": {},
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "datasources": [],
+          "targetDeviceAliasIds": [
+            "5c6ddcd5-23f8-99d1-27b8-df2f85193878"
+          ],
+          "enableDataExport": true,
+          "widgetCss": "",
+          "noDataDisplayMessage": "",
+          "showTitleIcon": false,
+          "titleTooltip": "",
+          "titleIcon": "list",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px"
+        },
+        "row": 0,
+        "col": 0,
+        "id": "3e707516-7d8e-46bb-c45a-863eda1625dd"
+      },
+      "d1f4a59f-1167-eaf3-8545-0be879f64e32": {
+        "isSystemType": true,
+        "bundleAlias": "control_widgets",
+        "typeAlias": "led_indicator",
+        "type": "rpc",
+        "title": "New widget",
+        "image": null,
+        "description": null,
+        "sizeX": 2.5,
+        "sizeY": 2.5,
+        "config": {
+          "targetDeviceAliases": [],
+          "showTitle": false,
+          "backgroundColor": "#e6e7e8",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "0px",
+          "settings": {
+            "requestTimeout": 500,
+            "initialValue": true,
+            "ledColor": "#12ff0b",
+            "retrieveValueMethod": "timeseries",
+            "parseValueFunction": "return data ? true : false;",
+            "performCheckStatus": false,
+            "checkStatusMethod": "checkStatus",
+            "requestPersistent": false,
+            "title": "Est en marche",
+            "valueAttribute": "Est en marche"
+          },
+          "title": "New Led indicator",
+          "dropShadow": true,
+          "enableFullscreen": false,
+          "widgetStyle": {},
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "decimals": 2,
+          "datasources": [],
+          "targetDeviceAliasIds": [
+            "5c6ddcd5-23f8-99d1-27b8-df2f85193878"
+          ]
+        },
+        "row": 0,
+        "col": 0,
+        "id": "d1f4a59f-1167-eaf3-8545-0be879f64e32"
+      },
+      "148df637-7815-d766-8707-88d1ba858997": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "timeseries_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "image": null,
+        "description": null,
+        "sizeX": 8,
+        "sizeY": 6.5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "name": null,
+              "entityAliasId": "5c6ddcd5-23f8-99d1-27b8-df2f85193878",
+              "filterId": null,
+              "dataKeys": [
+                {
+                  "name": "Est activable",
+                  "type": "timeseries",
+                  "label": "Est activable",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.0026883436609002054
+                },
+                {
+                  "name": "Est en marche",
+                  "type": "timeseries",
+                  "label": "Est en marche",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.466226255956691
+                }
+              ]
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "showTimestamp": true,
+            "displayPagination": true,
+            "defaultPageSize": 10,
+            "enableSearch": true,
+            "enableStickyHeader": true,
+            "enableStickyAction": true,
+            "reserveSpaceForHiddenAction": "true",
+            "showMilliseconds": false,
+            "useEntityLabel": false,
+            "hideEmptyLines": false,
+            "useRowStyleFunction": false
+          },
+          "title": "Historique des états",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400,
+            "padding": "5px 10px 5px 10px"
+          },
+          "useDashboardTimewindow": false,
+          "showLegend": false,
+          "widgetStyle": {},
+          "actions": {},
+          "showTitleIcon": false,
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "displayTimewindow": true,
+          "titleTooltip": "",
+          "enableDataExport": true,
+          "widgetCss": "",
+          "noDataDisplayMessage": ""
+        },
+        "row": 0,
+        "col": 0,
+        "id": "148df637-7815-d766-8707-88d1ba858997"
+      }
+    },
+    "states": {
+      "default": {
+        "name": "PLC",
+        "root": true,
+        "layouts": {
+          "main": {
+            "widgets": {
+              "f269b075-34f1-eb0a-3c29-823e826f7e30": {
+                "sizeX": 6,
+                "sizeY": 9,
+                "row": 8,
+                "col": 12
+              },
+              "690bb23e-0938-b555-60ea-1453e0871926": {
+                "sizeX": 12,
+                "sizeY": 9,
+                "row": 0,
+                "col": 0
+              },
+              "3e707516-7d8e-46bb-c45a-863eda1625dd": {
+                "sizeX": 12,
+                "sizeY": 8,
+                "row": 0,
+                "col": 12
+              },
+              "d1f4a59f-1167-eaf3-8545-0be879f64e32": {
+                "sizeX": 6,
+                "sizeY": 9,
+                "row": 8,
+                "col": 18
+              },
+              "148df637-7815-d766-8707-88d1ba858997": {
+                "sizeX": 12,
+                "sizeY": 8,
+                "row": 9,
+                "col": 0
+              }
+            },
+            "gridSettings": {
+              "backgroundColor": "#eeeeee",
+              "color": "rgba(0,0,0,0.870588)",
+              "columns": 24,
+              "backgroundSizeMode": "100%",
+              "autoFillHeight": true,
+              "mobileAutoFillHeight": false,
+              "mobileRowHeight": 70,
+              "margin": 10
+            }
+          }
+        }
+      }
+    },
+    "entityAliases": {
+      "5c6ddcd5-23f8-99d1-27b8-df2f85193878": {
+        "id": "5c6ddcd5-23f8-99d1-27b8-df2f85193878",
+        "alias": "Mon Automate",
+        "filter": {
+          "type": "singleEntity",
+          "resolveMultiple": false,
+          "singleEntity": {
+            "entityType": "DEVICE",
+            "id": "4d3e41f0-cbce-11ec-9326-ad8278896f52"
+          }
+        }
+      }
+    },
+    "timewindow": {
+      "hideInterval": false,
+      "hideAggregation": false,
+      "hideAggInterval": false,
+      "hideTimezone": false,
+      "selectedTab": 1,
+      "history": {
+        "historyType": 0,
+        "timewindowMs": 60000,
+        "interval": 1000,
+        "fixedTimewindow": {
+          "startTimeMs": 1651600574650.786,
+          "endTimeMs": 1651600574651.865
+        },
+        "quickInterval": "CURRENT_DAY"
+      },
+      "aggregation": {
+        "type": "AVG",
+        "limit": 200
+      }
+    },
+    "settings": {
+      "stateControllerId": "entity",
+      "showTitle": false,
+      "showDashboardsSelect": true,
+      "showEntitiesSelect": true,
+      "showDashboardTimewindow": true,
+      "showDashboardExport": true,
+      "toolbarAlwaysOpen": true,
+      "titleColor": "rgba(0,0,0,0.870588)"
+    },
+    "filters": {}
+  },
+  "name": "PLC Dashboard"
+}
