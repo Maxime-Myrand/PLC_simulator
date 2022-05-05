@@ -1,0 +1,51 @@
+{
+  "server": {
+    "name": "OPC-UA Default Server",
+    "url": "localhost:4840",
+    "timeoutInMillis": 5000,
+    "scanPeriodInMillis": 5000,
+    "disableSubscriptions": false,
+    "subCheckPeriodInMillis": 100,
+    "showMap": true,
+    "security": "Basic256",
+    "identity": {
+      "type": "anonymous"
+    },
+    "mapping": [
+      {
+        "deviceNodePattern": "Root\\.Objects\\.PLC",
+        "deviceNamePattern": "${Root\\.Objects\\.PLC\\.Name}",
+        "attributes": [],
+        "timeseries": [
+          {
+            "key": "Patate",
+            "path": "${ns=2;i=3}"
+          },
+          {
+            "key": "Dernière raison",
+            "path": "${ns=2;i=4}"
+          },
+           {
+            "key": "Est activable",
+            "path": "${ns=2;i=2}"
+          },
+          {
+            "key": "Est en marche",
+            "path": "${ns=2;i=5}"
+          }
+        ],
+        "rpc_methods": [
+          {
+            "method": "ToggleActivable",
+            "arguments": []
+          },
+          {
+            "method": "SendReason",
+            "arguments": []
+          }
+        ],
+        "attributes_updates": []
+      }
+    ]
+  }
+}
