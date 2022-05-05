@@ -7,7 +7,7 @@ thingsboard:
   minPackSendDelayMS: 0
   checkConnectorsConfigurationInSeconds: 60
   security:
-    accessToken: jesuisunegrossepatatec2t3
+    accessToken: arivplcsimulator2022
   qos: 1
 storage:
   type: memory
