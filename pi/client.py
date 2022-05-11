@@ -5,7 +5,7 @@ import logging
 import threading
 from asyncua import Client, Node, ua
 from time import sleep
-#import keyboard
+import keyboard
 import RPi.GPIO as GPIO
 
 GPIO.setwarnings(False)
@@ -36,16 +36,16 @@ async def main():
             machine_on_value = await machine_on_node.read_value()
             activable_value = await activable_node.read_value()
 
-            if GPIO.input(31) == GPIO.HIGH and activable_value == 1 and machine_on_value == 0:
+            if (GPIO.input(31) == GPIO.HIGH or keyboard.is_pressed("Alt")) and activable_value == 1 and machine_on_value == 0:
                 await machine_on_node.write_value(1)
 
             if machine_on_value == 1:
                 sleep(0.2)
                 nb_patates += 1
                 print(f"J'ai fais {str(nb_patates)} patate(s).")
-                if GPIO.input(31) == GPIO.HIGH:
+                if GPIO.input(31) == GPIO.HIGH or keyboard.is_pressed("Alt"):
                     print("Machine allready running.")
-                if GPIO.input(29) == GPIO.HIGH:
+                if GPIO.input(29) == GPIO.HIGH or keyboard.is_pressed("Ctrl"):
                     print("Machine turned off.")
                     print("======================================================")
                     print("==== VOUS DEVEZ ENTRER UNE RAISON SUR THINGSBOARD ====")
